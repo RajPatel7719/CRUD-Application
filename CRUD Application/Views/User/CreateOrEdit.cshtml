@@ -1,0 +1,82 @@
+﻿@model CRUD_Application.Models.User1
+
+@{
+    ViewData["Title"] = ViewBag.Title;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewBag.Title</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create</h3>
+                </div>
+                <form asp-action="CreateOrEdit" class="align-items-center" method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="FirstName" class="control-label">First Name</label>
+                            <input asp-for="FirstName" type="text" id="inputName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LastName" class="control-label">Last Name</label>
+                            <input asp-for="LastName" type="text" id="inputName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber" class="control-label">Phone Number</label>
+                            <input asp-for="PhoneNumber" type="text" id="inputName" class="form-control">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label">Email</label>
+                            <input asp-for="Email" type="email" id="inputName" class="form-control">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Gender" class="control-label">Gender</label>
+                            <input type="radio" asp-for="Gender" value="false">
+                            <label asp-for="Gender">Male</label>
+                            <input type="radio" asp-for="Gender" value="true">
+                            <label asp-for="Gender">Female</label>
+                            <br />
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <a asp-action="Index" class="btn btn-dark float-right">Back To List</a>
+                            @if (Model.Id == 0)
+                            {
+                                <input type="submit" value="Create new User" class="btn btn-success float-right">
+                            }
+                            else
+                            {
+                                <input type="submit" value="Edit User" class="btn btn-warning float-right">
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</section>
+<!-- /.content -->

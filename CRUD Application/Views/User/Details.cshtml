@@ -1,0 +1,61 @@
+﻿@model CRUD_Application.Models.User1
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>User Details</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">User Details</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Details</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <label asp-for="FirstName">@Model.FirstName</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <label asp-for="FirstName">@Model.LastName</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <label asp-for="FirstName">@Model.PhoneNumber</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <label asp-for="FirstName">@Model.Email</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Gender" class="control-label">Gender</label>
+                        <input type="radio" checked asp-for="Gender" value="0">
+                        <label asp-for="Gender">Male</label>
+                        <input type="radio" asp-for="Gender" value="1">
+                        <label asp-for="Gender">Female</label>
+                        <br />
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <a asp-action="CreateOrEdit" asp-route-id="@Model.Id" class="btn p-1 btn-warning float-right">Edit User</a>
+                        <a asp-action="Index" class="btn btn-dark float-right">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

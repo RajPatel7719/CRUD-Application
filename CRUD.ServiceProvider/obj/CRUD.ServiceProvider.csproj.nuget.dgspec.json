@@ -1,0 +1,140 @@
+{
+  "format": 1,
+  "restore": {
+    "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.ServiceProvider\\CRUD.ServiceProvider.csproj": {}
+  },
+  "projects": {
+    "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.Models\\CRUD.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.Models\\CRUD.Models.csproj",
+        "projectName": "CRUD.Models",
+        "projectPath": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.Models\\CRUD.Models.csproj",
+        "packagesPath": "C:\\Users\\techbrain\\.nuget\\packages\\",
+        "outputPath": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\techbrain\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.ServiceProvider\\CRUD.ServiceProvider.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.ServiceProvider\\CRUD.ServiceProvider.csproj",
+        "projectName": "CRUD.ServiceProvider",
+        "projectPath": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.ServiceProvider\\CRUD.ServiceProvider.csproj",
+        "packagesPath": "C:\\Users\\techbrain\\.nuget\\packages\\",
+        "outputPath": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.ServiceProvider\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\techbrain\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.Models\\CRUD.Models.csproj": {
+                "projectPath": "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD.Models\\CRUD.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
