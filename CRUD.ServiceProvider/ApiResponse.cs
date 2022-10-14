@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using CRUD.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace CRUD.ServiceProvider
 {
     public class ApiResponse<T>
     {
-        public static List<T> GetAPI(string controllerName, string actionName, string qString = "" )
+        public static async Task<ApiResult<List<T>>> GetAPI(string controllerName, string actionName, string qString = "" )
         {
             using (var client = new HttpClient())
             {
@@ -16,7 +19,8 @@ namespace CRUD.ServiceProvider
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<List<T>>(result.Content.ReadAsStringAsync().Result);
+                    var stringResult = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<ApiResult<List<T>>>(stringResult);
                 }
                 else
                 {
@@ -25,7 +29,7 @@ namespace CRUD.ServiceProvider
             }
         }
 
-        public static T GetAPIByID(string controllerName, string actionName, string qString = "")
+        public static async Task<ApiResult<T>> GetAPIByID(string controllerName, string actionName, string qString = "")
         {
             using (var client = new HttpClient())
             {
@@ -36,9 +40,10 @@ namespace CRUD.ServiceProvider
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result);
+                    var stringResult = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<ApiResult<T>>(stringResult);
                 }
-                return JsonConvert.DeserializeObject<T>(null); 
+                return null; 
             }
         }
 
@@ -58,24 +63,5 @@ namespace CRUD.ServiceProvider
                 return user;
             }
         }
-        //public static Task<T> PostSortingAPI(string controllerName, string actionName, string sortField, string currentSortField, string currentSortOrder)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("https://localhost:7080/");
-        //        //HTTP GET
-        //        string requestUri = client.BaseAddress + "api/" + controllerName + "/" + actionName + sortField + currentSortField + currentSortOrder;
-
-
-        //        var responseTask = client.GetAsync(requestUri);
-
-        //        var result = responseTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            return Task.FromResult(JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result));
-        //        }
-        //        return Task.FromResult(JsonConvert.DeserializeObject<T>(null));
-        //    }
-        //}
     }
 }
