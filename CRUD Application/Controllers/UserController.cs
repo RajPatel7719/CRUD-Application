@@ -14,9 +14,10 @@ namespace CRUD_Application.Controllers
             _apiProvider = apiProvider;
         }
 
-        public IActionResult Index(string sortField, string currentSortField, string currentSortOrder, string currentFilter, string SearchString, int? pageNo)
+        public async Task<IActionResult> Index(string sortField, string currentSortField, string currentSortOrder, string currentFilter, string SearchString, int? pageNo)
         {
-            var user = _apiProvider.GetUser();
+            var user = await _apiProvider.GetUser();
+            var result =  user.Result;
             if (SearchString != null)
             {
                 pageNo = 1;
@@ -29,12 +30,12 @@ namespace CRUD_Application.Controllers
             ViewBag.CurrentFilter = SearchString;
             if (!String.IsNullOrEmpty(SearchString))
             {
-                user = user .Where(s => s.FirstName.Contains(SearchString)).ToList();
+                result = result.Where(s => s.FirstName.Contains(SearchString)).ToList();
             }
-            user = this.SortUserData(user, sortField, currentSortField, currentSortOrder);
+            result = this.SortUserData(result, sortField, currentSortField, currentSortOrder);
             int pageSize = 10;
 
-            return View(PagingList<User1>.CreateAsync(user.AsQueryable(), pageNo ?? 1 , pageSize));
+            return View(PagingList<User1>.CreateAsync(result.AsQueryable(), pageNo ?? 1, pageSize));
         }
 
         public List<User1> SortUserData(IEnumerable<User1> user, string sortField, string currentSortField, string currentSortOrder)
@@ -69,16 +70,17 @@ namespace CRUD_Application.Controllers
         }
 
 
-        public IActionResult CreateOrEdit(int? ID)
+        public async Task<IActionResult> CreateOrEdit(int? ID)
         {
             ViewBag.Title = ID == null ? "Create User" : "Edit User";
             if (ID != null)
             {
-                var user = _apiProvider.GetUserByID(ID);
-                //user.Gender = user.Gender.Trim();
-                if (user != null)
+                var user = await _apiProvider.GetUserByID(ID);
+                var result = user.Result;
+
+                if (result != null)
                 {
-                    return View(user);
+                    return View(result);
                 }
                 return NotFound();
             }
@@ -89,19 +91,24 @@ namespace CRUD_Application.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateOrEdit(User1 user)
+        public async Task<IActionResult> CreateOrEdit(User1 user)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _apiProvider.CreateOrEdit(user);
+                    var result = await _apiProvider.CreateOrEdit(user);
+                    var results = result.StatusCode;
+                    if (results != 200)
+                    {
+                        return View(user);
+                    }
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
                     throw;
                 }
-                return RedirectToAction("Index");
             }
             else
             {
@@ -109,18 +116,19 @@ namespace CRUD_Application.Controllers
             }
         }
 
-        public IActionResult Details(int ID)
+        public async Task<IActionResult> Details(int ID)
         {
-            var users = _apiProvider.GetUserByID(ID);
-            if (users != null)
+            var user = await _apiProvider.GetUserByID(ID);
+            var result = user.Result;
+            if (result != null)
             {
                 //users.Gender = users.Gender.Trim();
-                return View(users);
+                return View(result);
             }
             return NotFound();
         }
 
-        public IActionResult Delete(int ID)
+        public async Task<IActionResult> Delete(int ID)
         {
             if (ID.ToString() == null)
             {
@@ -131,7 +139,12 @@ namespace CRUD_Application.Controllers
                 var users = _apiProvider.GetUserByID(ID);
                 if (users != null)
                 {
-                    _apiProvider.DeleteUser(ID);
+                    var result = _apiProvider.DeleteUser(ID);
+                    var results = result.Result.StatusCode;
+                    if (results != 200)
+                    {
+                        ViewBag.ErrorMessage = "User Not Deleted...!!!";
+                    }
                     return RedirectToAction("Index");
                 }
                 return NotFound();
