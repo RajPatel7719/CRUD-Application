@@ -1,24 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CRUD_Application.Models;
+using CRUD.ServiceProvider.Methods;
+using NuGet.Common;
+using Microsoft.AspNetCore.Http;
 
 namespace CRUD_Application.Controllers
 {
     public class AccountController : Controller
-    { 
-        // GET: Account
-        public IActionResult Login()
+    {
+        private readonly IApiProvider _apiProvider;
+
+        public AccountController(IApiProvider apiProvider)
         {
-              return View();
+            _apiProvider = apiProvider;
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Login([Bind("Id,Email,Password")] UserLogin userLogin)
+        public ActionResult Login()
         {
             return View();
         }
 
-        public IActionResult Register()
+        [HttpPost]
+        public async Task<IActionResult> Login(Login login)
+        {
+            try
+            {
+                var user = await _apiProvider.Login(login);
+                var status = user.Status;
+                if (status != "Success")
+                {
+                    ViewBag.Message = "Invalid User Name And Password";
+                    return View();
+                }
+                ViewBag.UserName = login.UserName;
+                Response.Cookies.Append("Token", user.Token.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
+                //HttpContext.Session.SetString("Token", user.Token.ToString());
+                
+                return RedirectToAction("Index", "User");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult Action()
         {
             return View();
         }

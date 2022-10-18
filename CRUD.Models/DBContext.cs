@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CRUD.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace CRUD_Application.Models.Models
         {
         }
         public virtual DbSet<User1> Users { get; set; } = null!;
-        public virtual DbSet<UserLogin> UserLogins { get; set; } = null!;
+        public virtual DbSet<Login> Logins { get; set; } = null!;
+        public virtual DbSet<Register> Registers { get; set; } = null!;
 
     }
 }

@@ -14,5 +14,6 @@ namespace CRUD.ServiceProvider.Methods
         public Task<ApiResult<User1>> GetUserByID(int? id);
         public Task<ApiResult<User1>> CreateOrEdit(User1 user1);
         public Task<ApiResult<User1>> DeleteUser(int? id);
+        public Task<Login> Login(Login login);
     }
 }

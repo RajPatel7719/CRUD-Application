@@ -16,6 +16,7 @@ namespace CRUD_Application.Controllers
 
         public async Task<IActionResult> Index(string sortField, string currentSortField, string currentSortOrder, string currentFilter, string SearchString, int? pageNo)
         {
+            //var Auth = HttpContext.Session.GetString("Token");
             var user = await _apiProvider.GetUser();
             var result =  user.Result;
             if (SearchString != null)
@@ -136,7 +137,7 @@ namespace CRUD_Application.Controllers
             }
             else
             {
-                var users = _apiProvider.GetUserByID(ID);
+                var users = await _apiProvider.GetUserByID(ID);
                 if (users != null)
                 {
                     var result = _apiProvider.DeleteUser(ID);
