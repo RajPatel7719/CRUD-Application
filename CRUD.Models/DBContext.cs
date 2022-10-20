@@ -1,4 +1,4 @@
-﻿using CRUD.Models;
+﻿using CRUD_Application.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUD_Application.Models.Models
+namespace CRUD.Models
 {
     public partial class DBContext : DbContext
     {

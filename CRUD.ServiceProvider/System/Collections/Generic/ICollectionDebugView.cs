@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace System.Collections.Generic
+namespace CRUD.ServiceProvider.System.Collections.Generic
 {
     internal class ICollectionDebugView<T>
     {

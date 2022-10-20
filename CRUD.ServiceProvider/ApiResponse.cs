@@ -1,5 +1,4 @@
-﻿using CRUD.Models;
-using CRUD_Application.Models;
+﻿using CRUD_Application.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;

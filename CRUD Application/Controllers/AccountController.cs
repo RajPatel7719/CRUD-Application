@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CRUD_Application.Models;
-using CRUD.ServiceProvider.Methods;
-using NuGet.Common;
-using Microsoft.AspNetCore.Http;
+﻿using CRUD_Application.Models;
+using CRUD.ServiceProvider.IService;
+using CRUD_Application.Filter;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD_Application.Controllers
 {
@@ -35,12 +34,11 @@ namespace CRUD_Application.Controllers
                 ViewBag.UserName = login.UserName;
                 Response.Cookies.Append("Token", user.Token.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
                 //HttpContext.Session.SetString("Token", user.Token.ToString());
-                
+
                 return RedirectToAction("Index", "User");
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

@@ -1,6 +1,5 @@
-﻿using CRUD.Models;
-using CRUD.ServiceProvider.Methods;
-using CRUD_Application.Models;
+﻿using CRUD_Application.Models;
+using CRUD.ServiceProvider.IService;
 using Microsoft.AspNetCore.Http;
 
 namespace CRUD.ServiceProvider

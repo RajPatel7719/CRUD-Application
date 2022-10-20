@@ -1,6 +1,6 @@
-﻿using CRUD.ServiceProvider;
-using CRUD.ServiceProvider.Methods;
-using CRUD_Application.Models;
+﻿using CRUD_Application.Models;
+using CRUD.ServiceProvider;
+using CRUD.ServiceProvider.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD_Application.Controllers
@@ -18,7 +18,7 @@ namespace CRUD_Application.Controllers
         {
             //var Auth = HttpContext.Session.GetString("Token");
             var user = await _apiProvider.GetUser();
-            var result =  user.Result;
+            var result = user.Result;
             if (SearchString != null)
             {
                 pageNo = 1;
