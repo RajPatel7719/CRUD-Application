@@ -1,6 +1,9 @@
+using CRUD.Models;
 using CRUD.ServiceProvider;
 using CRUD.ServiceProvider.IService;
 using CRUD_Application.Filter;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +21,14 @@ builder.Services.AddSession(option =>
     option.Cookie.HttpOnly = true;
     option.Cookie.IsEssential = true;
 });
-
+builder.Services.Configure<FormOptions>(o => {
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IApiProvider, ApiProvider>();
 
 

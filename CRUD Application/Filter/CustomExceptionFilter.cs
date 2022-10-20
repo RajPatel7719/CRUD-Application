@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CRUD.ServiceProvider;
+using CRUD.ServiceProvider.IService;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Net;
 using System.Text;
 
@@ -8,14 +11,19 @@ namespace CRUD_Application.Filter
     public class CustomExceptionFilter : IExceptionFilter
     {
         private readonly ILogger<CustomExceptionFilter> _logger;
-
-        public CustomExceptionFilter(ILogger<CustomExceptionFilter> logger)
+        private readonly IEmailSender _emailSender;
+        public CustomExceptionFilter(ILogger<CustomExceptionFilter> logger, IEmailSender emailSender)
         {
             _logger = logger;
+            _emailSender = emailSender;
         }
         public void OnException(ExceptionContext context)
         {
-            AddToLog(context.Exception, Path.Combine("Logging/log" + Guid.NewGuid().ToString() + ".txt"));
+            var logFIle = Path.Combine("Logging/log" + Guid.NewGuid().ToString() + ".txt");
+            AddToLog(context.Exception, logFIle);
+            var files = "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD Application\\Logging\\" + Path.GetFileName(logFIle);
+            var message = new Message("tbs.rajg@gmail.com", "Error log mail with Attachments", "This is the content from our mail with attachments.", files);
+            _emailSender.SendEmail(message);
         }
         public static void AddToLog(Exception exception, string path)
         {
