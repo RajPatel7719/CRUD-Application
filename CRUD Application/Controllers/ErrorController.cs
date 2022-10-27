@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace CRUD_Application.Controllers
 {
     public class ErrorController : Controller
     {
-        public IActionResult Error()
+        //[HttpGet, HttpPost, HttpPut, HttpDelete, HttpHead, HttpOptions, AcceptVerbs("PATCH")]
+
+        public IActionResult Error(string errCode)
         {
-            return View();
+            if (errCode == "500" || errCode == "404" || errCode == "403")
+            {
+                return View($"~/Views/Error/{errCode}.cshtml");
+            }
+
+            return View("~/Views/Shared/404.cshtml");
         }
     }
 }

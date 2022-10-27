@@ -2,6 +2,7 @@
 using CRUD.ServiceProvider.IService;
 using CRUD_Application.Filter;
 using Microsoft.AspNetCore.Mvc;
+using NLog.Fluent;
 
 namespace CRUD_Application.Controllers
 {
@@ -14,7 +15,7 @@ namespace CRUD_Application.Controllers
             _apiProvider = apiProvider;
         }
 
-        public ActionResult Login()
+        public IActionResult Login()
         {
             return View();
         }
@@ -28,7 +29,7 @@ namespace CRUD_Application.Controllers
                 var status = user.Status;
                 if (status != "Success")
                 {
-                    ViewBag.Message = "Invalid User Name And Password";
+                    ViewBag.Message = login.Message;
                     return View();
                 }
                 ViewBag.UserName = login.UserName;
@@ -43,8 +44,33 @@ namespace CRUD_Application.Controllers
             }
         }
 
-        public ActionResult Action()
+        public IActionResult Register()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(Register register)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await _apiProvider.Register(register);
+                    var status = user.Status;
+                    if (status != "Success")
+                    {
+                        ViewBag.Message = user.Message;
+                        return View();
+                    }
+                    return RedirectToAction("Login");
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             return View();
         }
     }

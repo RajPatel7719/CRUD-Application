@@ -37,5 +37,10 @@ namespace CRUD.ServiceProvider
             var loginUser = PostAuth("Authentication", "Login", login);
             return loginUser;
         }
+        public Task<Register> Register(Register register)
+        {
+            var registerUser = PostAuth("Authentication", "Register", register);
+            return registerUser;
+        }
     }
 }

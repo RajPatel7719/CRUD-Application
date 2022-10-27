@@ -19,5 +19,12 @@ namespace CRUD_Application.Models
 
         [Required(ErrorMessage = "Password Is Required")]
         public string Password { get; set; } = string.Empty;
+        
+        [Required(ErrorMessage = "Confirm Password Is Required")]
+        [Compare("Password", ErrorMessage = "Confirm Password Doesn't Match With Passowrd")]
+        public string ConfirmPassword { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+
     }
 }

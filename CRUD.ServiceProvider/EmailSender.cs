@@ -1,4 +1,4 @@
-﻿using CRUD.Models;
+﻿using CRUD_Application.Models;
 using CRUD.ServiceProvider.IService;
 using System.Net;
 using System.Net.Mail;

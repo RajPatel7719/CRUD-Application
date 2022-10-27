@@ -12,16 +12,18 @@ namespace CRUD_Application.Filter
     {
         private readonly ILogger<CustomExceptionFilter> _logger;
         private readonly IEmailSender _emailSender;
-        public CustomExceptionFilter(ILogger<CustomExceptionFilter> logger, IEmailSender emailSender)
+        private readonly IConfiguration _configuration;
+        public CustomExceptionFilter(ILogger<CustomExceptionFilter> logger, IEmailSender emailSender, IConfiguration configuration)
         {
             _logger = logger;
             _emailSender = emailSender;
+            _configuration = configuration;
         }
         public void OnException(ExceptionContext context)
         {
-            var logFIle = Path.Combine("Logging/log" + Guid.NewGuid().ToString() + ".txt");
+            var logFIle = _configuration.GetSection("FilePath").Value + Path.Combine("log" + Guid.NewGuid().ToString() + ".txt");
             AddToLog(context.Exception, logFIle);
-            var files = "G:\\Training\\ASP.NET CORE MVC\\CRUD APP\\CRUD Application\\Logging\\" + Path.GetFileName(logFIle);
+            var files = _configuration.GetSection("FilePath").Value + Path.GetFileName(logFIle);
             var message = new Message("tbs.rajg@gmail.com", "Error log mail with Attachments", "This is the content from our mail with attachments.", files);
             _emailSender.SendEmail(message);
         }

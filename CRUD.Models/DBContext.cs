@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CRUD.Models
+namespace CRUD_Application.Models
 {
     public partial class DBContext : DbContext
     {

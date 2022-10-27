@@ -73,7 +73,7 @@ namespace CRUD.ServiceProvider
             }
         }
 
-        public static async Task<Login> PostAuth(string controllerName, string actionName, Login model)
+        public static async Task<T> PostAuth<T>(string controllerName, string actionName, T model)
         {
             using (var client = new HttpClient())
             {
@@ -85,7 +85,7 @@ namespace CRUD.ServiceProvider
                 var postTask = await client.PostAsync(requestUri, content);
 
                 string token = await postTask.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Login>(token);
+                return JsonConvert.DeserializeObject<T>(token);
             }
         }
     }
