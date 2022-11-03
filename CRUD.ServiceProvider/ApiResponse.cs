@@ -55,6 +55,26 @@ namespace CRUD.ServiceProvider
             }
         }
 
+        public async Task<ApiResult<T>> GetAPIByEmail<T>(string controllerName, string actionName, string qString = "")
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7080/");
+                //var Token = _httpContextAccessor.HttpContext.Request.Cookies["Token"];
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                //HTTP GET
+                var responseTask = client.GetAsync("api/" + controllerName + "/" + actionName + qString);
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var stringResult = await result.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<ApiResult<T>>(stringResult);
+                }
+                return null;
+            }
+        }
+
         public async Task<ApiResult<T>> PostApi<T>(string controllerName, string actionName, T model)
         {
             using (var client = new HttpClient())

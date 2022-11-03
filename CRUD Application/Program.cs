@@ -14,6 +14,10 @@ builder.Services.AddControllersWithViews(config =>
 
 });
 
+
+//Add Auto Mapper Service
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(option =>
 {

@@ -1,18 +1,22 @@
 ﻿using CRUD_Application.Models;
 using CRUD.ServiceProvider.IService;
-using CRUD_Application.Filter;
 using Microsoft.AspNetCore.Mvc;
-using NLog.Fluent;
+using CRUD_Application.Models.ModelsDTO;
+using AutoMapper;
 
 namespace CRUD_Application.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IApiProvider _apiProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
 
-        public AccountController(IApiProvider apiProvider)
+        public AccountController(IApiProvider apiProvider, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _apiProvider = apiProvider;
+            _httpContextAccessor = httpContextAccessor;
+            _mapper = mapper;
         }
 
         public IActionResult Login()
@@ -34,7 +38,7 @@ namespace CRUD_Application.Controllers
                 }
                 ViewBag.UserName = login.UserName;
                 Response.Cookies.Append("Token", user.Token.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
-                //HttpContext.Session.SetString("Token", user.Token.ToString());
+                _httpContextAccessor.HttpContext.Session.SetString("UserName", login.UserName.ToString());
 
                 return RedirectToAction("Index", "User");
             }
@@ -68,6 +72,35 @@ namespace CRUD_Application.Controllers
                 catch (Exception)
                 {
 
+                    throw;
+                }
+            }
+            return View();
+        }
+
+        public IActionResult EditProfile(string email)
+        {
+            var user = _apiProvider.GetUserByEmail(email);
+            if (user == null) 
+                return RedirectToActionPermanent("Index", "User");
+
+            return View(user.Result.Result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(RegisterDTO register)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var mappedUser = _mapper.Map<Register>(register);
+                    await _apiProvider.EditProfile(mappedUser);
+
+                    return RedirectToActionPermanent("Index", "User");
+                }
+                catch (Exception)
+                {
                     throw;
                 }
             }

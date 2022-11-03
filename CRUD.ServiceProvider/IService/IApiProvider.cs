@@ -15,5 +15,7 @@ namespace CRUD.ServiceProvider.IService
         public Task<ApiResult<User1>> DeleteUser(int? id);
         public Task<Login> Login(Login login);
         public Task<Register> Register(Register register);
+        public Task<ApiResult<Register>> GetUserByEmail(string email);
+        public Task EditProfile(Register register);
     }
 }

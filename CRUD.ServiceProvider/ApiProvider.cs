@@ -42,5 +42,16 @@ namespace CRUD.ServiceProvider
             var registerUser = PostAuth("Authentication", "Register", register);
             return registerUser;
         }
+
+        public Task EditProfile(Register register)
+        {
+            return PostApi("Authentication", "EditProfile", register);
+        }
+
+        public Task<ApiResult<Register>> GetUserByEmail(string email)
+        {
+            var user = GetAPIByEmail<Register>("Authentication", "GetUserByEmail", "?email=" + email);
+            return user;
+        }
     }
 }

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor _httpContextAccessor
+@{
+	var userName = _httpContextAccessor.HttpContext.Session.GetString("UserName");
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -64,11 +68,16 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item">
 							<i class="fas fa-user mr-2"></i> 
-							<span class="float-right text-muted text-sm">@ViewBag.UserName</span>
+							<span class="float-right text-muted text-sm">@userName</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a asp-action="EditProfile" asp-controller="Account" asp-route-email="@userName" class="dropdown-item">
+							<i class="fas fa-pen-square mr-2"></i>
+							<span class="float-right text-muted text-sm">Edit Profile</span>
 						</a>
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item">
-							<i class="fas fa-user mr-2"></i> 
+							<i class="fas fa-sign-out-alt mr-2"></i> 
 							<span class="float-right text-muted text-sm">Logout</span>
 						</a>
 						@*<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>*@
