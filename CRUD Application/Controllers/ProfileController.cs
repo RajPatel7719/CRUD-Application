@@ -35,7 +35,7 @@ namespace CRUD_Application.Controllers
         {
             var user = await _apiProvider.GetUserByEmail(email);
             if (user == null)
-                return RedirectToActionPermanent("Index", "User");
+                return RedirectToActionPermanent("Index", "Profile");
 
             return View(user.Result);
         }
@@ -50,7 +50,7 @@ namespace CRUD_Application.Controllers
                     var mappedUser = _mapper.Map<Register>(register);
                     await _apiProvider.EditProfile(mappedUser);
 
-                    return RedirectToActionPermanent("Index", "User");
+                    return RedirectToActionPermanent("Index", "Profile");
                 }
                 catch (Exception)
                 {

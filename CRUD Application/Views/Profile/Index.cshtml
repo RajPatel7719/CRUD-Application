@@ -23,13 +23,7 @@
     <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Users</h3>
-          <div class="card-tools">
-              @using (Html.BeginForm())
-              {
-                  <p>Find by First Name: @Html.TextBox("SearchString")<input type="submit" value="Search" /></p>
-              } 
-          </div>
+          <h2 class="card-title">Users</h2>
         </div>
         <div class="card-body p-0">
           <table class="table table-striped projects">
@@ -56,11 +50,16 @@
                       <td>
                               @Html.DisplayFor(model => user.Email)
                       </td>
-                      <td>
-                              @Html.DisplayFor(model => user.TwoFactorEnabled)
-                      </td>
+                      @if (user.TwoFactorEnabled) 
+                      {
+                          <td class="text-success">Active</td>
+                      }
+                      else
+                      {
+                          <td class="text-danger">Inactive</td>
+                      }
                       <td class="project-actions text-right">
-                          <a class="btn btn-info btn-sm" asp-route-id="@user.Email" asp-action="EditProfile"><i class="fas fa-pencil-alt"></i>Edit</a>
+                          <a class="btn btn-info btn-sm" asp-route-email="@user.Email" asp-action="EditProfile"><i class="fas fa-pencil-alt"></i>Edit</a>
                           <!--<a class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure You Want To Delete These User?');" asp-route-id="@user.Email" asp-action="Delete"><i class="fas fa-trash"></i>Delete</a>-->
                       </td>
                   </tr>
@@ -69,7 +68,6 @@
           </table>
         </div>
         <div class="card-footer">
-            <a asp-action="CreateOrEdit" class="btn btn-success float-right">Create New User</a>
         </div>
         <!-- /.card-body -->
       </div>
