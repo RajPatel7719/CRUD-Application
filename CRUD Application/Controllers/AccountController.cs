@@ -1,11 +1,12 @@
 ﻿using CRUD_Application.Models;
 using CRUD.ServiceProvider.IService;
 using Microsoft.AspNetCore.Mvc;
-using CRUD_Application.Models.ModelsDTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRUD_Application.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly IApiProvider _apiProvider;
@@ -38,9 +39,10 @@ namespace CRUD_Application.Controllers
                 }
                 ViewBag.UserName = login.UserName;
                 Response.Cookies.Append("Token", user.Token.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
-                _httpContextAccessor.HttpContext.Session.SetString("UserName", login.UserName.ToString());
+                Response.Cookies.Append("UserName", login.UserName.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
+                HttpContext.Session.SetString("UserName", login.UserName.ToString());
 
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", "Profile");
             }
             catch (Exception)
             {
@@ -78,33 +80,12 @@ namespace CRUD_Application.Controllers
             return View();
         }
 
-        public IActionResult EditProfile(string email)
+        public IActionResult Logout()
         {
-            var user = _apiProvider.GetUserByEmail(email);
-            if (user == null) 
-                return RedirectToActionPermanent("Index", "User");
-
-            return View(user.Result.Result);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditProfile(RegisterDTO register)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var mappedUser = _mapper.Map<Register>(register);
-                    await _apiProvider.EditProfile(mappedUser);
-
-                    return RedirectToActionPermanent("Index", "User");
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            return View();
+            _httpContextAccessor.HttpContext.Session.Clear();
+            Response.Cookies.Delete("Token");
+            Response.Cookies.Delete("UserName");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

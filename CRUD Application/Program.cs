@@ -3,18 +3,24 @@ using CRUD.ServiceProvider;
 using CRUD.ServiceProvider.IService;
 using CRUD_Application.Filter;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(config =>
 {
-
+    config.Filters.Add(typeof(CustomAuthenticationFilter));
     config.Filters.Add(typeof(CustomExceptionFilter));
+}).AddMvcOptions(option =>
+    option.Filters.Add(
+        new ResponseCacheAttribute
+        {
+            NoStore = true,
+            Location = ResponseCacheLocation.None,
+        }));
 
-});
-
-
+//builder.Services.AddResponseCaching();
 //Add Auto Mapper Service
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -35,7 +41,7 @@ var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<Ema
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IApiProvider, ApiProvider>();
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 
@@ -57,7 +63,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
-
+//app.UseResponseCaching();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");

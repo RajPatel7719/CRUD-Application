@@ -71,12 +71,12 @@
 							<span class="float-right text-muted text-sm">@userName</span>
 						</a>
 						<div class="dropdown-divider"></div>
-						<a asp-action="EditProfile" asp-controller="Account" asp-route-email="@userName" class="dropdown-item">
+						<a asp-action="EditProfile" asp-controller="Profile" asp-route-email="@userName" class="dropdown-item">
 							<i class="fas fa-pen-square mr-2"></i>
 							<span class="float-right text-muted text-sm">Edit Profile</span>
 						</a>
 						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
+						<a asp-action="Logout" asp-controller="Account" class="dropdown-item">
 							<i class="fas fa-sign-out-alt mr-2"></i> 
 							<span class="float-right text-muted text-sm">Logout</span>
 						</a>

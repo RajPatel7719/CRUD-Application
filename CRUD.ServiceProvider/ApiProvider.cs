@@ -53,5 +53,11 @@ namespace CRUD.ServiceProvider
             var user = GetAPIByEmail<Register>("Authentication", "GetUserByEmail", "?email=" + email);
             return user;
         }
+
+        public Task<ApiResult<List<Register>>> GetProfile()
+        {
+            var user = GetAPI<Register>("Authentication", "GetUsersProfile");
+            return user;
+        }
     }
 }

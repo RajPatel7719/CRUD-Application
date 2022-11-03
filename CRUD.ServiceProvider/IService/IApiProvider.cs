@@ -1,9 +1,4 @@
 ﻿using CRUD_Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUD.ServiceProvider.IService
 {
@@ -17,5 +12,6 @@ namespace CRUD.ServiceProvider.IService
         public Task<Register> Register(Register register);
         public Task<ApiResult<Register>> GetUserByEmail(string email);
         public Task EditProfile(Register register);
+        public Task<ApiResult<List<Register>>> GetProfile();
     }
 }
