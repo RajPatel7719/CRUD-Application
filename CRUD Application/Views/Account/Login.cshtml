@@ -29,7 +29,7 @@
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 <label class="text-danger">@ViewBag.Message</label>
-                <form method="post">
+                <form method="post" autocomplete="off">
                     <div class="input-group mb-3">
                         <input type="email" asp-for="UserName" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" asp-for="Password" class="form-control" placeholder="Password">
+                        <input type="password" asp-for="Password" class="form-control" value="@ViewBag.Password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
+                                <input type="checkbox" asp-for="RememberMe" id="remember">
                                 <label for="remember">
                                     Remember Me
                                 </label>
