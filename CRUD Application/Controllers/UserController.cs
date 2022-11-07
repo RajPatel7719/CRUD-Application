@@ -16,7 +16,6 @@ namespace CRUD_Application.Controllers
 
         public async Task<IActionResult> Index(string sortField, string currentSortField, string currentSortOrder, string currentFilter, string SearchString, int? pageNo)
         {
-            //var Auth = HttpContext.Session.GetString("Token");
             var user = await _apiProvider.GetUser();
             var result = user.Result;
             if (SearchString != null)

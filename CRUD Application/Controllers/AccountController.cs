@@ -24,20 +24,8 @@ namespace CRUD_Application.Controllers
 
         public IActionResult Login()
         {
-            var username = _httpContextAccessor.HttpContext.Request.Cookies["User"];
-            var password = _httpContextAccessor.HttpContext.Request.Cookies["Pass"];
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                return View(new Login());
+            return View();
             }
-            else
-            {
-                Login login = new() { UserName = username, Password = password, RememberMe = true };
-                ViewBag.Password = password;
-
-                return View(login);
-            }
-        }
 
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
@@ -55,16 +43,7 @@ namespace CRUD_Application.Controllers
                 Response.Cookies.Append("Token", user.Token.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
                 Response.Cookies.Append("UserName", login.UserName.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
                 HttpContext.Session.SetString("UserName", login.UserName.ToString());
-                if (login.RememberMe)
-                {
-                    Response.Cookies.Append("User", login.UserName.ToString(), new CookieOptions() { Expires = DateTime.Now.AddDays(30) });
-                    Response.Cookies.Append("Pass", login.Password.ToString(), new CookieOptions() { Expires = DateTime.Now.AddDays(30) });
-                }
-                else
-                {
-                    Response.Cookies.Delete("User");
-                    Response.Cookies.Delete("Pass");
-                }
+
                 return RedirectToAction("Index", "Profile");
             }
             catch (Exception)

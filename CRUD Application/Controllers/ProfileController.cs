@@ -19,7 +19,6 @@ namespace CRUD_Application.Controllers
 
         public async Task<IActionResult> Index(string SearchString, int? pageNo)
         {
-            //var Auth = HttpContext.Session.GetString("Token");
             var user = await _apiProvider.GetProfile();
             var result = user.Result;
             
