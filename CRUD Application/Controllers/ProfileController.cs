@@ -49,22 +49,41 @@ namespace CRUD_Application.Controllers
             {
                 try
                 {
-                    var mappedUser = _mapper.Map<Register>(user);
                     if (user.ImageFile != null)
                     {
-                        var image = await _imageUpload.SaveImage(user.ImageFile, user.UserName);
-                        if (!string.IsNullOrEmpty(image))
+                        if (user.ImageFile.Length > 0)
                         {
-                            mappedUser.ProfilePicture = image;
-                            await _apiProvider.EditProfile(mappedUser);
+                            using (MemoryStream mStream = new())
+                            {
+                                await user.ImageFile.CopyToAsync(mStream);
+                                user.ImageData = mStream.ToArray();
+                            }
+
+                            var base64 = Convert.ToBase64String(user.ImageData);
+                            var imgSrc = String.Format("data:image/*;base64,{0}", base64);
                             _httpContextAccessor.HttpContext.Session.Remove("ProfileImage");
-                            _httpContextAccessor.HttpContext.Session.SetString("ProfileImage", image);
+                            _httpContextAccessor.HttpContext.Session.SetString("ProfileImage", imgSrc);
                         }
                     }
-                    else
-                    {
-                        await _apiProvider.EditProfile(mappedUser);
-                    }
+                    var mappedUser = _mapper.Map<Register>(user);
+
+                    await _apiProvider.EditProfile(mappedUser);
+                    
+                    //if (user.ImageFile != null)
+                    //{
+                    //    var image = await _imageUpload.SaveImage(user.ImageFile, user.UserName);
+                    //    if (!string.IsNullOrEmpty(image))
+                    //    {
+                    //        mappedUser.ProfilePicture = image;
+                    //        await _apiProvider.EditProfile(mappedUser);
+                    //        _httpContextAccessor.HttpContext.Session.Remove("ProfileImage");
+                    //        _httpContextAccessor.HttpContext.Session.SetString("ProfileImage", image);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    await _apiProvider.EditProfile(mappedUser);
+                    //}
 
                     return RedirectToActionPermanent("Index", "Profile");
                 }

@@ -16,6 +16,7 @@ namespace CRUD_Application.Models.ModelsDTO
         public string Email { get; set; } = string.Empty;
         public bool TwoFactorEnabled { get; set; }
         public string ProfilePicture { get; set; } = string.Empty;
+        public byte[]? ImageData { get; set; }
 
         [NotMapped]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

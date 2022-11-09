@@ -28,6 +28,7 @@ namespace CRUD_Application.Models
         [Compare("Password", ErrorMessage = "Confirm Password Doesn't Match With Passowrd")]
         public string ConfirmPassword { get; set; } = string.Empty;
         public string ProfilePicture { get; set; } = string.Empty;
+        public byte[]? ImageData { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public string Status { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;

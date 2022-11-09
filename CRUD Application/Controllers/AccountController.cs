@@ -5,6 +5,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Graph;
+using Org.BouncyCastle.Utilities;
 
 namespace CRUD_Application.Controllers
 {
@@ -44,12 +46,16 @@ namespace CRUD_Application.Controllers
                     ViewBag.Message = login.Message;
                     return View();
                 }
-                var userdetail = await _apiProvider.GetUserByEmail(login.UserName);
+                var userdetail = _apiProvider.GetUserByEmail(login.UserName).Result.Result;
                 ViewBag.UserName = login.UserName;
                 Response.Cookies.Append("Token", user.Token.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
                 Response.Cookies.Append("UserName", login.UserName.ToString(), new CookieOptions() { Expires = DateTime.Now.AddHours(12) });
                 HttpContext.Session.SetString("UserName", login.UserName.ToString());
-                HttpContext.Session.SetString("ProfileImage", userdetail.Result.ProfilePicture.ToString());
+
+                //var image = File(userdetail.ImageData, "image/*");
+                var base64 = Convert.ToBase64String(userdetail.ImageData);
+                var imgSrc = String.Format("data:image/*;base64,{0}", base64);
+                HttpContext.Session.SetString("ProfileImage", imgSrc);
 
                 return RedirectToAction("Index", "Profile");
             }
@@ -71,12 +77,25 @@ namespace CRUD_Application.Controllers
             {
                 try
                 {
+                    if (register.ImageFile != null)
+                    {
+                        if (register.ImageFile.Length > 0)
+                        {
+                            using (MemoryStream mStream = new())
+                            {
+                                await register.ImageFile.CopyToAsync(mStream);
+                                register.ImageData = mStream.ToArray();
+                                register.ProfilePicture = register.ProfilePicture;
+                            }
+                        }
+                    }
                     Register user = new() 
                     { 
                         UserName = register.UserName,
                         Email = register.Email,
                         Password = register.Password,
                         ProfilePicture = register.ProfilePicture,
+                        ImageData = register.ImageData,
                         TwoFactorEnabled = register.TwoFactorEnabled
                     };
 
@@ -87,12 +106,12 @@ namespace CRUD_Application.Controllers
                         ViewBag.Message = userdetail.Message;
                         return View();
                     }
-                    var image = await _imageUpload.SaveImage(register.ImageFile, register.UserName);
-                    if (!string.IsNullOrEmpty(image))
-                    {
-                        user.ProfilePicture = image;
-                        await _apiProvider.EditProfile(user);
-                    }
+                    //var image = await _imageUpload.SaveImage(register.ImageFile, register.UserName);
+                    //if (!string.IsNullOrEmpty(image))
+                    //{
+                    //    user.ProfilePicture = image;
+                    //    await _apiProvider.EditProfile(user);
+                    //}
                     return RedirectToAction("Login", "Account");
                 }
                 catch (Exception)
