@@ -13,5 +13,6 @@ namespace CRUD.ServiceProvider.IService
         public Task<ApiResult<Register>> GetUserByEmail(string email);
         public Task EditProfile(Register register);
         public Task<ApiResult<List<Register>>> GetProfile();
+        //public Task<ApiResult<Register>> UploadProfilePicture(Register register);
     }
 }

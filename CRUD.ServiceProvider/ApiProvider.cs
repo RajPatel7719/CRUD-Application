@@ -45,7 +45,7 @@ namespace CRUD.ServiceProvider
 
         public Task EditProfile(Register register)
         {
-            return PostApi("Authentication", "EditProfile", register);
+            return PostApi("Profile", "EditProfile", register);
         }
 
         public Task<ApiResult<Register>> GetUserByEmail(string email)
@@ -59,5 +59,11 @@ namespace CRUD.ServiceProvider
             var user = GetAPI<Register>("Authentication", "GetUsersProfile");
             return user;
         }
+
+        //public Task<ApiResult<Register>> UploadProfilePicture(Register register)
+        //{
+        //    var user = PostImage<Register>("Profile", "UploadProfilePicture", register);
+        //    return user;
+        //}
     }
 }

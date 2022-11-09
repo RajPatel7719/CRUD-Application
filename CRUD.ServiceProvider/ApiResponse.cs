@@ -1,7 +1,6 @@
 ﻿using CRUD_Application.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Net.Http;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 
@@ -108,5 +107,45 @@ namespace CRUD.ServiceProvider
                 return JsonConvert.DeserializeObject<T>(token);
             }
         }
+
+        //public async Task<ApiResult<T>> PostImage<T>(string controllerName, string actionName, Register model)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        //byte[]? data;
+        //        var Token = _httpContextAccessor.HttpContext.Request.Cookies["Token"];
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+        //        var content = new MultipartFormDataContent();
+        //        content.Add(new StreamContent(model.ImageFile.OpenReadStream()), "ProfileImage", Path.GetFileName(model.ImageFile.FileName));
+        //        content.Add(new StringContent(model.UserName), "UserName");
+
+        //        var fileContent = new StreamContent(new FileStream(uploadFilePath, FileMode.Open));
+        //        fileContent.Headers.ContentType = new MediaTypeHeaderValue(fileContentType);
+        //        fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+        //        {
+        //            Name = "File",
+        //            FileName = "Text.txt"
+        //        };
+        //        content.Add(fileContent);
+
+        //        var fileContent = new StreamContent(new FileStream(model.ImageFile.FileName, FileMode.Open));
+        //        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+        //        fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+        //        {
+        //            Name = "ProfileImage",
+        //            FileName = model.ImageFile.FileName
+        //        };
+        //        content.Add(fileContent);
+
+        //        client.BaseAddress = new Uri("https://localhost:7080/");
+        //        string requestUri = client.BaseAddress + "api/" + controllerName + "/" + actionName;
+
+        //        //HTTP POST
+        //        var postTask = await client.PostAsync(requestUri, content);
+
+        //        string apiResponse = await postTask.Content.ReadAsStringAsync();
+        //        return JsonConvert.DeserializeObject<ApiResult<T>>(apiResponse);
+        //    }
+        //}
     }
 }

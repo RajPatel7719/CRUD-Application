@@ -42,6 +42,7 @@ builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IApiProvider, ApiProvider>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IImageUpload, ImageUpload>();
 
 var app = builder.Build();
 

@@ -1,6 +1,11 @@
-﻿@model CRUD_Application.Models.Register
+﻿@inject IHttpContextAccessor _httpContextAccessor
+@model CRUD_Application.Models.Register
 @{
-    ViewData["Title"] = "EditProfile";
+    string profilePicture = _httpContextAccessor.HttpContext.Session.GetString("ProfileImage");
+    if (string.IsNullOrEmpty(profilePicture))
+    {
+        profilePicture = "noProfile.png";
+    }
 }
 
 <div class="row p-4 justify-content-center">
@@ -11,8 +16,24 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Edit Profile</p>
-                <label class="text-danger">@ViewBag.Message</label>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="media-container">
+                        <span>
+                            <input type="file" asp-for="ImageFile" id="media-input" accept=".png">
+                            <i class="an an-write media-icon"></i>
+                        </span>
+                        <figure class="media-object">
+                            <img class="img-object" src="@("/images/"+ profilePicture)">
+                        </figure>
+                    </div>
+                    @*<div class="media-control">
+                        <div class="btn edit-profile">
+                            <i class="an an-write"></i>Edit Profile
+                        </div>
+                        <div class="btn save-profile">
+                            <i class="an an-save"></i>Save Profile
+                        </div>
+                    </div>*@
                     <div class="input-group mb-3">
                         <input type="email" asp-for="Email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -27,7 +48,7 @@
                         <input type="email" asp-for="UserName" class="form-control" placeholder="User Name">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-user"></span>
                             </div>
                         </div>
                     </div>

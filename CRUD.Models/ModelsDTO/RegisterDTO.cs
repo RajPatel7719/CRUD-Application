@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CRUD_Application.Models.ModelsDTO
 {
@@ -17,5 +15,10 @@ namespace CRUD_Application.Models.ModelsDTO
         [Required(ErrorMessage = "Email Is Required")]
         public string Email { get; set; } = string.Empty;
         public bool TwoFactorEnabled { get; set; }
+        public string ProfilePicture { get; set; } = string.Empty;
+
+        [NotMapped]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public IFormFile? ImageFile { get; set; }
     }
 }

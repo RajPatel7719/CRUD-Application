@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+    <!-- Site Style -->
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body class="hold-transition register-page">
     <div class="register-box">
@@ -28,7 +30,16 @@
             <div class="card-body">
                 <p class="login-box-msg">Register a new User</p>
                 <label class="text-danger">@ViewBag.Message</label>
-                <form asp-action="Register" method="post">
+                <form asp-action="Register" method="post" enctype="multipart/form-data">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload" asp-for="ImageFile" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload" class="text-center"><i class="fa fa-camera fa-2x"></i></label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview"></div>
+                        </div>
+                    </div>
                     <div class="input-group mb-3">
                         <input type="email" asp-for="Email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -42,7 +53,7 @@
                         <input type="email" asp-for="UserName" class="form-control" placeholder="User Name">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fas fa-user"></span>
                             </div>
                         </div>
                     </div>
@@ -85,5 +96,7 @@
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- Site JS -->
+    <script src="~/js/site.js"></script>
 </body>
 </html>
