@@ -56,11 +56,10 @@ else
     app.UseExceptionHandler("/Error/Error");
     app.UseHsts();
 }
-
+app.UseStatusCodePagesWithReExecute("/Error/Error");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-//app.UseStatusCodePagesWithReExecute("/Error/Error", "?statusCode={0}");
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();

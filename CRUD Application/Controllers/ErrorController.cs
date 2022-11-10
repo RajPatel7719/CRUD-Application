@@ -5,15 +5,20 @@ namespace CRUD_Application.Controllers
 {
     public class ErrorController : Controller
     {
-        //[HttpGet, HttpPost, HttpPut, HttpDelete, HttpHead, HttpOptions, AcceptVerbs("PATCH")]
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public IActionResult Error(string errCode)
+        public ErrorController(IHttpContextAccessor contextAccessor)
         {
-            if (errCode == "500" || errCode == "404" || errCode == "403")
-            {
-                return View($"~/Views/Error/{errCode}.cshtml");
-            }
+            _contextAccessor = contextAccessor;
+        }
 
+        public IActionResult Error()
+        {
+            var isLogedIn = _contextAccessor.HttpContext.Request.Cookies["Token"];
+            if (isLogedIn != null)
+            {
+                return RedirectToAction("Index", "Profile");
+            }
             return View("~/Views/Shared/404.cshtml");
         }
     }
