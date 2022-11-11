@@ -83,6 +83,8 @@
 							<span class="float-right text-muted text-sm">Edit Profile</span>
 						</a>
 						<div class="dropdown-divider"></div>
+						<span id="spanTimeLeft"></span>
+						<div class="dropdown-divider"></div>
 						<a asp-action="Logout" asp-controller="Account" class="dropdown-item">
 							<i class="fas fa-sign-out-alt mr-2"></i> 
 							<span class="float-right text-muted text-sm">Logout</span>
@@ -202,5 +204,7 @@
 <script src="~/dist/js/pages/dashboard.js"></script>
 <!-- Site JS -->
 <script src="~/js/site.js"></script>
+<!-- Inactivity Logout JS -->
+<script src="~/js/inactivitylogout.js"></script>
 </body>
 </html>
