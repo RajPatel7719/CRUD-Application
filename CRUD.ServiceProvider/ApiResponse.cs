@@ -13,12 +13,12 @@ namespace CRUD.ServiceProvider
         {
             _httpContextAccessor = httpContextAccessor;
         }
-
+        private const string BaseAddress = "https://localhost:7080/";
         public async Task<ApiResult<List<T>>> GetAPI<T>(string controllerName, string actionName, string qString = "")
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7080/");
+                client.BaseAddress = new Uri(BaseAddress);
                 var Token = _httpContextAccessor.HttpContext.Request.Cookies["Token"];
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 //HTTP GET
@@ -38,7 +38,7 @@ namespace CRUD.ServiceProvider
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7080/");
+                client.BaseAddress = new Uri(BaseAddress);
                 var Token = _httpContextAccessor.HttpContext.Request.Cookies["Token"];
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 //HTTP GET
@@ -58,7 +58,7 @@ namespace CRUD.ServiceProvider
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7080/");
+                client.BaseAddress = new Uri(BaseAddress);
                 //var Token = _httpContextAccessor.HttpContext.Request.Cookies["Token"];
                 //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 //HTTP GET
@@ -81,7 +81,7 @@ namespace CRUD.ServiceProvider
                 var Token = _httpContextAccessor.HttpContext.Request.Cookies["Token"];
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
                 StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-                client.BaseAddress = new Uri("https://localhost:7080/");
+                client.BaseAddress = new Uri(BaseAddress);
                 string requestUri = client.BaseAddress + "api/" + controllerName + "/" + actionName;
 
                 //HTTP POST
@@ -97,7 +97,7 @@ namespace CRUD.ServiceProvider
             using (var client = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-                client.BaseAddress = new Uri("https://localhost:7080/");
+                client.BaseAddress = new Uri(BaseAddress);
                 string requestUri = client.BaseAddress + "api/" + controllerName + "/" + actionName;
 
                 //HTTP POST
@@ -137,7 +137,7 @@ namespace CRUD.ServiceProvider
         //        };
         //        content.Add(fileContent);
 
-        //        client.BaseAddress = new Uri("https://localhost:7080/");
+        //        client.BaseAddress = new Uri(BaseAddress);
         //        string requestUri = client.BaseAddress + "api/" + controllerName + "/" + actionName;
 
         //        //HTTP POST

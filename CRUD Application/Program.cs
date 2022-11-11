@@ -31,6 +31,14 @@ builder.Services.AddSession(option =>
     option.Cookie.HttpOnly = true;
     option.Cookie.IsEssential = true;
 });
+
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+//    options.LoginPath = "~/Account/Login";
+//    options.SlidingExpiration = true;
+//});
+
 builder.Services.Configure<FormOptions>(o =>
 {
     o.ValueLengthLimit = int.MaxValue;

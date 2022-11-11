@@ -1,21 +1,17 @@
 ﻿using CRUD.ServiceProvider;
 using CRUD.ServiceProvider.IService;
-using Microsoft.AspNetCore.Mvc;
+using CRUD_Application.Const;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Org.BouncyCastle.Asn1.Ocsp;
-using System.Net;
 using System.Text;
 
 namespace CRUD_Application.Filter
 {
     public class CustomExceptionFilter : IExceptionFilter
     {
-        private readonly ILogger<CustomExceptionFilter> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
-        public CustomExceptionFilter(ILogger<CustomExceptionFilter> logger, IEmailSender emailSender, IConfiguration configuration)
+        public CustomExceptionFilter(IEmailSender emailSender, IConfiguration configuration)
         {
-            _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
         }
@@ -24,12 +20,12 @@ namespace CRUD_Application.Filter
             var logFIle = _configuration.GetSection("FilePath").Value + Path.Combine("log" + Guid.NewGuid().ToString() + ".txt");
             AddToLog(context.Exception, logFIle);
             var files = _configuration.GetSection("FilePath").Value + Path.GetFileName(logFIle);
-            var message = new Message("tbs.rajg@gmail.com", "Error log mail with Attachments", "This is the content from our mail with attachments.", files);
+            var message = new Message(Constants.Messages.To, Constants.Messages.Subject, Constants.Messages.Content, files);
             _emailSender.SendEmail(message);
         }
         public static void AddToLog(Exception exception, string path)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine(DateTime.Now.ToLocalTime().ToString("F"));
             GetExceptionInfo(exception, sb);
             sb.AppendLine("------------------------------------------------------------" + Environment.NewLine);
